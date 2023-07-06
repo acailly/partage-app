@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Partage Chateaubourg</title>
+
+    <link href="https://unpkg.com/m-@1.6.0/dist/min.css" rel="stylesheet" />
+    <script src="https://unpkg.com/m-@1.6.0/dist/min.js" defer></script>
+  </head>
+  <body class="bg-offwhite">
+    <m-container maxwidth="md">
+      <header class="flex flx-col justify-content-center pad-b-lg">
+        <h1 class="txt-center pad-b-lg">Partage sur Chateaubourg</h1>
+        <a href="index.html"> Revenir à la liste des objets </a>
+      </header>
+
+      <form>
+        <m-box ord="primary" class="pad-l-lg">
+          <h2 class="pad-b-lg">De quels objets disposez vous ?</h2>
+          <fieldset>
+            <legend class="pad-b-lg">🛠️ Bricolage et jardinage</legend>
+            <m-row>
+              <m-col>
+                <input type="checkbox" name="todo" value="todo" />
+                <label>Perceuse / visseuse</label>
+              </m-col>
+              <m-col>
+                <input type="checkbox" name="todo" value="todo" />
+                <label>Pelle</label>
+              </m-col>
+            </m-row>
+            <m-row>
+              <m-col>
+                <input type="checkbox" name="todo" value="todo" />
+                <label>Rateau</label>
+              </m-col>
+              <m-col>
+                <input type="checkbox" name="todo" value="todo" />
+                <label>Tondeuse</label>
+              </m-col>
+            </m-row>
+            <m-row>
+              <m-col>
+                <input type="checkbox" name="todo" value="todo" />
+                <label>Coupe bordure</label>
+              </m-col>
+              <m-col>
+                <input type="checkbox" name="todo" value="todo" />
+                <label>Etabli</label>
+              </m-col>
+            </m-row>
+            <m-row>
+              <m-col>
+                <input type="checkbox" name="todo" value="todo" />
+                <label>Scie sauteuse</label>
+              </m-col>
+              <m-col>
+                <input type="checkbox" name="todo" value="todo" />
+                <label>Souffleur / Aspirateur à feuille</label>
+              </m-col>
+            </m-row>
+            <m-row>
+              <m-col>
+                <input type="checkbox" name="todo" value="todo" />
+                <label>Pioche</label>
+              </m-col>
+              <m-col>
+                <input type="checkbox" name="todo" value="todo" />
+                <label>Grelinette</label>
+              </m-col>
+            </m-row>
+            <m-row>
+              <m-col>
+                <input type="checkbox" name="todo" value="todo" />
+                <label>Outils divers</label>
+              </m-col>
+            </m-row>
+          </fieldset>
+
+          <fieldset>
+            <legend class="pad-b-lg">
+              🚴‍♀️ Vélo, trotinette, etc. et accessoires
+            </legend>
+            <m-row>
+              <m-col>
+                <input type="checkbox" name="todo" value="todo" />
+                <label>Vélo</label>
+              </m-col>
+              <m-col>
+                <input type="checkbox" name="todo" value="todo" />
+                <label>Trotinette</label>
+              </m-col>
+            </m-row>
+            <m-row>
+              <m-col>
+                <input type="checkbox" name="todo" value="todo" />
+                <label>Pompe à vélo</label>
+              </m-col>
+              <m-col>
+                <input type="checkbox" name="todo" value="todo" />
+                <label>Sacoche</label>
+              </m-col>
+            </m-row>
+          </fieldset>
+
+          <fieldset>
+            <label>Certains de vos objets ne se trouvent pas ci-dessus ? Ajoutez les ici 👇</label>
+            <input type="text" class="pad-l-lg" placeholder="" />
+          </fieldset>
+
+          <fieldset>
+            <label>Adresse e-mail où vous contacter</label>
+            <input type="email" required/>
+            <small>
+              Cette adresse sert uniquement à vous mettre en contact avec les
+              autres utilisateurs du site. Votre adresse email ne sera ni
+              divulguée publiquement, ni utilisée à des fins commerciaux
+            </small>
+          </fieldset>
+          <button type="submit" ord="primary">Valider</button>
+        </m-box>
+      </form>
+    </m-container>
+  </body>
+</html>
