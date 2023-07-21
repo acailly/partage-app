@@ -11,7 +11,7 @@
   <body class="bg-offwhite">
     <m-container maxwidth="md">
       <header class="flex flx-col justify-content-center pad-b-xl">
-        <h1 class="txt-center">Partage sur Chateaubourg</h1>
+        <h1 class="txt-center">Partage sur Châteaubourg</h1>
         <a
           role="button"
           ord="primary"
@@ -22,50 +22,84 @@
         </a>
       </header>
 
-      <section class="pad-all-md">
-        <h4>🛠️ Bricolage et jardinage (3 types d'objets)</h4>
-        <m-box ord="primary" class="pad-l-lg">
-          <m-row>
-            <m-col>
-                <a href="ask.html?object=Perceuse / visseuse">Perceuse / visseuse</a>
-            </m-col>
-            <m-col>Pelle</m-col>
-          </m-row>
-          <m-row>
-            <m-col>Rateau</m-col>
-            <m-col>Tondeuse</m-col>
-          </m-row>
-          <m-row>
-            <m-col>Coupe bordure</m-col>
-            <m-col>Etabli</m-col>
-          </m-row>
-          <m-row>
-            <m-col>Scie sauteuse</m-col>
-            <m-col>Souffleur / Aspirateur à feuille</m-col>
-          </m-row>
-          <m-row>
-            <m-col>Pioche</m-col>
-            <m-col>Grelinette</m-col>
-          </m-row>
-          <m-row>
-            <m-col>Outils divers</m-col>
-          </m-row>
-        </m-box>
-      </section>
+      <datalist id="Liste des catégories">
+        <option>🛠️ Bricolage et jardinage</option>
+        <option>🚴‍♀️ Vélo, trotinette, etc. et accessoires</option>
+        <option>⛹️ Matériel de sport</option>
+        <option>🪀 Jouets</option>
+        <option>📱 High Tech</option>
+      </datalist>
 
-      <section class="pad-all-md">
-        <h4>🚴‍♀️ Vélo, trotinette, etc. et accessoires (4 types d'objets)</h4>
-        <m-box ord="primary" class="pad-l-lg">
-          <m-row>
-            <m-col>Vélo</m-col>
-            <m-col>Trotinette</m-col>
-          </m-row>
-          <m-row>
-            <m-col>Pompe à vélo</m-col>
-            <m-col>Sacoche</m-col>
-          </m-row>
-        </m-box>
-      </section>
+      <datalist id="🛠️ Bricolage et jardinage">
+        <option>Perceuse / visseuse</option>
+        <option>Pelle</option>
+        <option>Rateau</option>
+        <option>Tondeuse</option>
+        <option>Coupe bordure</option>
+        <option>Etabli</option>
+        <option>Scie sauteuse</option>
+        <option>Souffleur / Aspirateur à feuille</option>
+        <option>Pioche</option>
+        <option>Grelinette</option>
+        <option>Clés et tournevis</option>
+      </datalist>
+
+      <datalist id="🚴‍♀️ Vélo, trotinette, etc. et accessoires">
+        <option>Vélo</option>
+        <option>Trotinette</option>
+        <option>Pompe à vélo</option>
+        <option>Sacoche</option>
+      </datalist>
+
+      <datalist id="⛹️ Matériel de sport"></datalist>
+      
+      <datalist id="🪀 Jouets"></datalist>
+      
+      <datalist id="📱 High Tech"></datalist>
+
+      <script>
+        let html = "";
+
+        const listeCatégories = Array.from(
+          document.getElementById("Liste des catégories").options
+        );
+
+        listeCatégories.forEach((catégorie) => {
+          const listeObjetsDansCatégorie = Array.from(
+            document.getElementById(catégorie.value).options
+          );
+
+          html += `<section class="pad-all-md">`;
+          html += `<h4>${catégorie.value} (${listeObjetsDansCatégorie.length} types d'objets)</h4>`;
+          html += `<m-box ord="primary" class="pad-l-lg">`;
+
+          let premièreColonne = true;
+          listeObjetsDansCatégorie.forEach((objet) => {
+            if (premièreColonne) {
+              html += `<m-row>`;
+            }
+
+            html += `<m-col>`;
+            html += `<a href="ask.html?object=${objet.value}">${objet.value}</a>`;
+            html += `</m-col>`;
+
+            if (!premièreColonne) {
+              html += `</m-row>`;
+            }
+
+            premièreColonne = !premièreColonne;
+          });
+
+          html += `</m-box>`;
+          html += `</section>`;
+        });
+
+        const main = document.createElement("main");
+        main.innerHTML = html;
+
+        document.currentScript.after(main);
+        document.currentScript.remove();
+      </script>
     </m-container>
   </body>
 </html>

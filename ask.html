@@ -11,7 +11,7 @@
   <body class="bg-offwhite">
     <m-container maxwidth="md">
       <header class="flex flx-col justify-content-center pad-b-lg">
-        <h1 class="txt-center pad-b-lg">Partage sur Chateaubourg</h1>
+        <h1 class="txt-center pad-b-lg">Partage sur Châteaubourg</h1>
         <a href="index.html"> Revenir à la liste des objets </a>
       </header>
 
@@ -20,13 +20,19 @@
           ord="primary"
           class="flex flx-col justify-content-center align-center pad-l-lg mar-b-lg"
         >
-          <h2 class="txt-center pad-b-lg">
-            Bonjour 👋 pourrais-je vous emprunter votre perceuse / visseuse ?
+          <h2 id="titre" class="txt-center pad-b-lg">
+            Emprunter un objet
           </h2>
+          <script>
+            const titre = document.getElementById("titre")
+
+            const objet = new URLSearchParams(document.location.search).get("object")
+            titre.textContent = `Emprunter un(e) ${objet}`
+          </script>
 
           <form>
             <fieldset>
-                <label>Votre message à destination des personnes ayant cet objet en leur possession</label>
+                <label>Votre message à destination des personnes ayant cet objet en leur possession (facultatif)</label>
                 <textarea placeholder=""></textarea>
               </fieldset>
     
