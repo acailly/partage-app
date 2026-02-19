@@ -21,84 +21,54 @@
           Prêter mes objets
         </a>
       </header>
-
-      <datalist id="Liste des catégories">
-        <option>🛠️ Bricolage et jardinage</option>
-        <option>🚴‍♀️ Vélo, trotinette, etc. et accessoires</option>
-        <option>⛹️ Matériel de sport</option>
-        <option>🪀 Jouets</option>
-        <option>📱 High Tech</option>
-      </datalist>
-
-      <datalist id="🛠️ Bricolage et jardinage">
-        <option>Perceuse / visseuse</option>
-        <option>Pelle</option>
-        <option>Rateau</option>
-        <option>Tondeuse</option>
-        <option>Coupe bordure</option>
-        <option>Etabli</option>
-        <option>Scie sauteuse</option>
-        <option>Souffleur / Aspirateur à feuille</option>
-        <option>Pioche</option>
-        <option>Grelinette</option>
-        <option>Clés et tournevis</option>
-      </datalist>
-
-      <datalist id="🚴‍♀️ Vélo, trotinette, etc. et accessoires">
-        <option>Vélo</option>
-        <option>Trotinette</option>
-        <option>Pompe à vélo</option>
-        <option>Sacoche</option>
-      </datalist>
-
-      <datalist id="⛹️ Matériel de sport"></datalist>
       
-      <datalist id="🪀 Jouets"></datalist>
-      
-      <datalist id="📱 High Tech"></datalist>
+      <main>
+        Chargement des données...
+      </main>
 
       <script>
-        let html = "";
+        const thisScript = document.currentScript
 
-        const listeCatégories = Array.from(
-          document.getElementById("Liste des catégories").options
-        );
+        // TODO ACY ajouter un champ sort order dans la catégorie
+        fetch('https://humble-dawn-687a03b4a9.strapiapp.com/api/categorie-objets?populate=*&sort[0]=updatedAt')
+          .then(response => response.json())
+          .then(response => {
+            const {data: objetsParCategorie} = response
 
-        listeCatégories.forEach((catégorie) => {
-          const listeObjetsDansCatégorie = Array.from(
-            document.getElementById(catégorie.value).options
-          );
+            let html = "";
 
-          html += `<section class="pad-all-md">`;
-          html += `<h4>${catégorie.value} (${listeObjetsDansCatégorie.length} types d'objets)</h4>`;
-          html += `<m-box ord="primary" class="pad-l-lg">`;
+            objetsParCategorie.forEach((catégorie) => {
+              html += `<section class="pad-all-md">`;
+              html += `<h4>${catégorie.Nom} (${catégorie.objets.length} types d'objets)</h4>`;
+              html += `<m-box ord="primary" class="pad-l-lg">`;
 
-          let premièreColonne = true;
-          listeObjetsDansCatégorie.forEach((objet) => {
-            if (premièreColonne) {
-              html += `<m-row>`;
-            }
+              let premièreColonne = true;
+              catégorie.objets.forEach((objet) => {
+                if (premièreColonne) {
+                  html += `<m-row>`;
+                }
 
-            html += `<m-col>`;
-            html += `<a href="ask.html?object=${objet.value}">${objet.value}</a>`;
-            html += `</m-col>`;
+                html += `<m-col>`;
+                // TODO ACY ajouter un champ slug dans l'objet
+                html += `<a href="ask.html?object=${objet.Nom}">${objet.Nom}</a>`;
+                html += `</m-col>`;
 
-            if (!premièreColonne) {
-              html += `</m-row>`;
-            }
+                if (!premièreColonne) {
+                  html += `</m-row>`;
+                }
 
-            premièreColonne = !premièreColonne;
-          });
+                premièreColonne = !premièreColonne;
+              });
 
-          html += `</m-box>`;
-          html += `</section>`;
-        });
+              html += `</m-box>`;
+              html += `</section>`;
+            });
 
-        const main = document.createElement("main");
-        main.innerHTML = html;
+            const main = document.querySelector("main");
+            main.innerHTML = html;
 
-        document.currentScript.after(main);
-        document.currentScript.remove();
+            thisScript.remove();
+          })
       </script>
     </m-container>
   </body>
