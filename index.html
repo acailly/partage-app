@@ -27,10 +27,15 @@
       </main>
 
       <script>
+        // @ts-check
         const thisScript = document.currentScript
 
+
+        // const apiURL = 'http://localhost:1337/api/categorie-objets?populate=*&sort[0]=updatedAt'
+        const apiURL = 'https://humble-dawn-687a03b4a9.strapiapp.com/api/categorie-objets?populate=*&sort[0]=updatedAt'
+
         // TODO ACY ajouter un champ sort order dans la catégorie
-        fetch('https://humble-dawn-687a03b4a9.strapiapp.com/api/categorie-objets?populate=*&sort[0]=updatedAt')
+        fetch(apiURL)
           .then(response => response.json())
           .then(response => {
             const {data: objetsParCategorie} = response
@@ -65,9 +70,11 @@
             });
 
             const main = document.querySelector("main");
-            main.innerHTML = html;
+            if(main){
+              main.innerHTML = html;
+            }
 
-            thisScript.remove();
+            thisScript?.remove();
           })
       </script>
     </m-container>

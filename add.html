@@ -15,18 +15,63 @@
         <a href="index.html"> Revenir à la liste des objets </a>
       </header>
 
-      <form>
+      <script>
+        // @ts-check
+        /**
+         * @param {Event} [event]
+         */
+        async function onAdd(event){
+          event?.preventDefault();
+
+          const form = /** @type {HTMLFormElement | null} */ (event?.target)
+          if (form) {
+            const data = new FormData(form)
+            const message = data.get("message")
+            const email = data.get("email")
+
+            // const apiURL = 'http://localhost:1337/api/proposition-prets'
+            const apiURL = 'https://humble-dawn-687a03b4a9.strapiapp.com/api/proposition-prets'
+            fetch(apiURL, 
+              {
+                method: 'POST',
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  data: {
+                    email,
+                    message
+                  }
+                })
+              }
+            ).then(async (response) => {
+              if(!response.ok){
+                const errorText = await response.text()
+                throw new Error(`${response.status}-${errorText}`)
+              }
+
+              form.reset()
+              alert(`Votre proposition est bien enregistrée, elle sera traitée et ajoutée aux propositions existantes prochainement`)
+            })
+            .catch(e => {
+              alert(`Une erreur s'est produite (détails: ${e.toString()})`)
+            })
+          }
+        }
+      </script>
+
+      <form onsubmit="onAdd(event)">
         <m-box ord="primary" class="pad-l-lg">
           <h2 class="pad-b-lg">De quels objets disposez vous ?</h2>
 
           <fieldset>
             <label>Saisissez les ici 👇</label>
-            <textarea type="text" rows="5" class="pad-l-lg" placeholder=""></textarea>
+            <textarea name="message" type="text" rows="5" class="pad-l-lg" placeholder="" required></textarea>
           </fieldset>
 
           <fieldset>
             <label>Adresse e-mail où vous contacter</label>
-            <input type="email" required/>
+            <input name="email" type="email" required/>
             <small>
               Cette adresse sert uniquement à vous mettre en contact avec les
               autres utilisateurs du site. Votre adresse email ne sera ni
@@ -36,6 +81,9 @@
           <button type="submit" ord="primary">Valider</button>
         </m-box>
       </form>
+      <script>
+
+      </script>
     </m-container>
   </body>
 </html>
