@@ -15,60 +15,115 @@
         <a href="index.html"> Revenir à la liste des objets </a>
       </header>
 
-      <form>
-        <m-box
-          ord="primary"
-          class="flex flx-col justify-content-center align-center pad-l-lg mar-b-lg"
-        >
-          <h2 id="titre" class="txt-center pad-b-lg">Emprunter un objet</h2>
-          <script>
-            const titre = document.getElementById("titre");
-
-            const objet = new URLSearchParams(document.location.search).get(
+      <m-box
+        ord="primary"
+        class="flex flx-col justify-content-center align-center pad-l-lg mar-b-lg"
+      >
+        <script>
+          // @ts-check
+          function getObjet(){
+            return new URLSearchParams(document.location.search).get(
               "object"
             );
+          }
+        </script>
+
+        <h2 id="titre" class="txt-center pad-b-lg">Emprunter un objet</h2>
+        <script>
+          // @ts-check
+          const titre = document.getElementById("titre");
+
+          const objet = getObjet()
+          if(titre){
             titre.textContent = `Emprunter un(e) ${objet}`;
-          </script>
+          }
+        </script>
 
-          <form>
-            <fieldset>
-              <label>Adresse e-mail où vous contacter</label>
-              <input type="email" required />
-              <small>
-                Cette adresse sert uniquement à vous mettre en contact avec les
-                autres utilisateurs du site. Votre adresse email ne sera ni
-                divulguée publiquement, ni utilisée à des fins commerciaux
-              </small>
-            </fieldset>
+        <script>
+          // @ts-check
+          /**
+           * @param {Event} [event]
+           */
+          async function onAsk(event){
+            event?.preventDefault();
 
-            <fieldset>
-              <label
-                >Votre message à destination des personnes ayant cet objet en
-                leur possession (facultatif)</label
-              >
-              <textarea placeholder=""></textarea>
-            </fieldset>
+            const form = /** @type {HTMLFormElement | null} */ (event?.target)
+            if (form) {
+              const data = new FormData(form)
+              const message = data.get("message")
+              const email = data.get("email")
+              const objet = getObjet()
 
-            <button type="submit" ord="primary" style="margin: auto">
-              Envoyer ma demande
-            </button>
-          </form>
-        </m-box>
-        <m-box ord="primary" class="pad-l-lg">
-          <h2>Comment ca marche ?</h2>
-          <p>C'est très simple !</p>
-          <p>
-            Lorsque vous cliquez sur le bouton ci-dessus, un email est envoyé à
-            tous les utilisateurs ayant indiqué avoir cet objet en leur
-            possession
-          </p>
-          <p>
-            Nous leur transmettons votre message ainsi que votre adresse email
-            afin qu'ils vous contactent directement pour convenir d'un
-            rendez-vous
-          </p>
-        </m-box>
-      </form>
+              // const apiURL = 'http://localhost:1337/api/demande-prets'
+              const apiURL = 'https://humble-dawn-687a03b4a9.strapiapp.com/api/demande-prets'
+              fetch(apiURL, 
+                {
+                  method: 'POST',
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    data: {
+                      email,
+                      message,
+                      objet
+                    }
+                  })
+                }
+              ).then(async (response) => {
+                if(!response.ok){
+                  const errorText = await response.text()
+                  throw new Error(`${response.status}-${errorText}`)
+                }
+
+                form.reset()
+                alert(`Votre demande a bien été envoyée aux prêteurs, ils vous contacteront directement par email`)
+              })
+              .catch(e => {
+                alert(`Une erreur s'est produite (détails: ${e.toString()})`)
+              })
+            }
+          }
+        </script>
+
+        <form onsubmit="onAsk(event)">
+          <fieldset>
+            <label>Adresse e-mail où vous contacter</label>
+            <input name="email" type="email" required />
+            <small>
+              Cette adresse sert uniquement à vous mettre en contact avec les
+              autres utilisateurs du site. Votre adresse email ne sera ni
+              divulguée publiquement, ni utilisée à des fins commerciaux
+            </small>
+          </fieldset>
+
+          <fieldset>
+            <label
+              >Votre message à destination des personnes ayant cet objet en
+              leur possession (facultatif)</label
+            >
+            <textarea name="message" placeholder="" required></textarea>
+          </fieldset>
+
+          <button type="submit" ord="primary" style="margin: auto">
+            Envoyer ma demande
+          </button>
+        </form>
+      </m-box>
+      <m-box ord="primary" class="pad-l-lg">
+        <h2>Comment ca marche ?</h2>
+        <p>C'est très simple !</p>
+        <p>
+          Lorsque vous cliquez sur le bouton ci-dessus, un email est envoyé à
+          tous les utilisateurs ayant indiqué avoir cet objet en leur
+          possession
+        </p>
+        <p>
+          Nous leur transmettons votre message ainsi que votre adresse email
+          afin qu'ils vous contactent directement pour convenir d'un
+          rendez-vous
+        </p>
+      </m-box>
     </m-container>
   </body>
 </html>
