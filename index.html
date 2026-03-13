@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Partage Chateaubourg</title>
 
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌀</text></svg>">
+
     <link href="https://unpkg.com/m-@1.6.0/dist/min.css" rel="stylesheet" />
     <script src="https://unpkg.com/m-@1.6.0/dist/min.js" defer></script>
   </head>
@@ -42,13 +44,19 @@
 
             let html = "";
 
+            objetsParCategorie.sort((a,b) => b.objets.length - a.objets.length)
+
             objetsParCategorie.forEach((catégorie) => {
               html += `<section class="pad-all-md">`;
               html += `<h4>${catégorie.Nom} (${catégorie.objets.length} types d'objets)</h4>`;
               html += `<m-box ord="primary" class="pad-l-lg">`;
 
               let premièreColonne = true;
-              catégorie.objets.forEach((objet) => {
+
+              const objets = [...catégorie.objets]
+              objets.sort((a,b) => a.Nom.trim().localeCompare(b.Nom.trim()))
+
+              objets.forEach((objet) => {
                 if (premièreColonne) {
                   html += `<m-row>`;
                 }
