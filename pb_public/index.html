@@ -33,10 +33,9 @@
         const thisScript = document.currentScript
 
 
-        // const apiURL = 'http://localhost:1337/api/categorie-objets?populate=*&sort[0]=updatedAt'
-        const apiURL = 'https://humble-dawn-687a03b4a9.strapiapp.com/api/categorie-objets?populate=*&sort[0]=updatedAt'
+        // const apiURL = 'http://localhost:8080/api/categorie-objets'
+        const apiURL = 'https://partage-app.fly.dev/api/categorie-objets'
 
-        // TODO ACY ajouter un champ sort order dans la catégorie
         fetch(apiURL)
           .then(response => response.json())
           .then(response => {
@@ -48,13 +47,13 @@
 
             objetsParCategorie.forEach((catégorie) => {
               html += `<section class="pad-all-md">`;
-              html += `<h4>${catégorie.Nom} (${catégorie.objets.length} types d'objets)</h4>`;
+              html += `<h4>${catégorie.nom} (${catégorie.objets.length} types d'objets)</h4>`;
               html += `<m-box ord="primary" class="pad-l-lg">`;
 
               let premièreColonne = true;
 
               const objets = [...catégorie.objets]
-              objets.sort((a,b) => a.Nom.trim().localeCompare(b.Nom.trim()))
+              objets.sort((a,b) => a.nom.trim().localeCompare(b.nom.trim()))
 
               objets.forEach((objet) => {
                 if (premièreColonne) {
@@ -63,7 +62,7 @@
 
                 html += `<m-col>`;
                 // TODO ACY ajouter un champ slug dans l'objet
-                html += `<a href="ask.html?object=${objet.Nom}">${objet.Nom}</a>`;
+                html += `<a href="ask.html?object=${objet.nom}">${objet.nom}</a>`;
                 html += `</m-col>`;
 
                 if (!premièreColonne) {

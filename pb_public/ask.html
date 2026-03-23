@@ -49,13 +49,22 @@
 
             const form = /** @type {HTMLFormElement | null} */ (event?.target)
             if (form) {
+              const askButton = document.getElementById('ask-button')
+              let askButtonLabel = ''
+              if(askButton){
+                askButtonLabel = askButton.textContent
+                askButton.textContent = 'Envoi en cours...'
+                askButton.setAttribute('disabled', '')
+              }
+
               const data = new FormData(form)
               const message = data.get("message")
               const email = data.get("email")
               const objet = getObjet()
 
-              // const apiURL = 'http://localhost:1337/api/demande-prets'
-              const apiURL = 'https://humble-dawn-687a03b4a9.strapiapp.com/api/demande-prets'
+              // const apiURL = 'http://localhost:8080/api/demande-pret'
+              const apiURL = 'https://partage-app.fly.dev/api/demande-pret'
+
               fetch(apiURL, 
                 {
                   method: 'POST',
@@ -82,6 +91,12 @@
               .catch(e => {
                 alert(`Une erreur s'est produite (détails: ${e.toString()})`)
               })
+              .finally(() => {
+                if(askButton){
+                  askButton.textContent = askButtonLabel
+                  askButton.removeAttribute('disabled')
+                }
+              })
             }
           }
         </script>
@@ -105,7 +120,7 @@
             <textarea name="message" placeholder="" required></textarea>
           </fieldset>
 
-          <button type="submit" ord="primary" style="margin: auto">
+          <button id="ask-button" type="submit" ord="primary" style="margin: auto">
             Envoyer ma demande
           </button>
         </form>

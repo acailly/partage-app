@@ -29,8 +29,9 @@
             const message = data.get("message")
             const email = data.get("email")
 
-            // const apiURL = 'http://localhost:1337/api/proposition-prets'
-            const apiURL = 'https://humble-dawn-687a03b4a9.strapiapp.com/api/proposition-prets'
+            // const apiURL = 'http://localhost:8080/api/proposition-pret'
+            const apiURL = 'https://partage-app.fly.dev/api/proposition-pret'
+
             fetch(apiURL, 
               {
                 method: 'POST',
