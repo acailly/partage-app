@@ -1,8 +1,6 @@
 // @ts-check
 /// <reference path="../pb_data/types.d.ts" />
 
-const CONSTANTS = require(`${__hooks}/constants.js`)
-
 routerAdd('POST', '/api/proposition-pret', (e) => {
   const body = e.requestInfo().body;
   const data = body.data;
